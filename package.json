@@ -1,0 +1,9 @@
+{
+  "name": "spokensite",
+  "version": "1.0.0",
+  "description": "SpokenSite - Your Story. Your Site.",
+  "scripts": {
+    "start": "npx serve public",
+    "build": "echo 'Static site - no build needed'"
+  }
+}

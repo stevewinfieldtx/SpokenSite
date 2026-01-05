@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SpokenSite - Your Story. Your Site.</title>
+  <meta name="description" content="We don't pick templates. We interview you, research your competitors, and build a site that could only be yours.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎙️</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #1e293b;
+      --bg-warm: #243447;
+      --surface: #334155;
+      --accent: #14b8a6;
+      --accent-glow: #2dd4bf;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --cream: #f8fafc;
+      --success: #22c55e;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+    /* Navigation */
+    nav {
+      padding: 1.5rem 0;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: linear-gradient(to bottom, var(--bg) 0%, transparent 100%);
+    }
+
+    nav .container { display: flex; justify-content: space-between; align-items: center; }
+
+    .logo {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.75rem;
+      color: var(--cream);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    .nav-cta {
+      background: var(--accent);
+      color: var(--bg);
+      padding: 0.75rem 1.5rem;
+      border-radius: 100px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+      font-size: 1rem;
+    }
+
+    .nav-cta:hover {
+      background: var(--accent-glow);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(20, 184, 166, 0.3);
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 100px;
+      position: relative;
+    }
+
+    .hero-content { max-width: 650px; position: relative; z-index: 2; }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--surface);
+      padding: 0.5rem 1rem;
+      border-radius: 100px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      animation: fadeUp 0.8s ease-out;
+    }
+
+    .hero-tag::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--success);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .hero h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(3rem, 8vw, 5rem);
+      line-height: 1.1;
+      color: var(--cream);
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.8s ease-out 0.1s backwards;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 1.3rem;
+      color: var(--text-muted);
+      max-width: 550px;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.8s ease-out 0.2s backwards;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--accent);
+      color: var(--bg);
+      padding: 1rem 2rem;
+      border-radius: 100px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      animation: fadeUp 0.8s ease-out 0.3s backwards;
+      cursor: pointer;
+      border: none;
+    }
+
+    .hero-cta:hover {
+      background: var(--accent-glow);
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(20, 184, 166, 0.4);
+    }
+
+    .hero-cta svg { transition: transform 0.3s ease; }
+    .hero-cta:hover svg { transform: translateX(4px); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Hero background image */
+    .hero-bg {
+      position: absolute;
+      right: -10%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 60%;
+      height: 80%;
+      opacity: 0.4;
+      z-index: 1;
+    }
+
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      mask-image: linear-gradient(to left, rgba(0,0,0,0.8) 0%, transparent 80%);
+      -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.8) 0%, transparent 80%);
+    }
+
+    /* Problem Section */
+    .problem {
+      padding: 8rem 0;
+      background: var(--bg-warm);
+      position: relative;
+    }
+
+    .problem::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+
+    .section-label {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .problem h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--cream);
+      max-width: 800px;
+      margin-bottom: 3rem;
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .problem-card {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .problem-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent);
+    }
+
+    .problem-card-img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      opacity: 0.8;
+    }
+
+    .problem-card-content {
+      padding: 1.75rem;
+    }
+
+    .problem-card h3 {
+      color: var(--text);
+      margin-bottom: 0.75rem;
+      font-size: 1.25rem;
+    }
+
+    .problem-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; }
+
+    /* Process Section */
+    .process { padding: 8rem 0; }
+
+    .process h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--cream);
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .process-sub {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      margin-bottom: 4rem;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 900px) { .steps { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .steps { grid-template-columns: 1fr; } }
+
+    .step {
+      text-align: center;
+      padding: 1.5rem;
+      position: relative;
+    }
+
+    .step-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-glow) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      box-shadow: 0 8px 24px rgba(20, 184, 166, 0.3);
+    }
+
+    .step-icon svg {
+      width: 36px;
+      height: 36px;
+      stroke: var(--bg);
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .step h3 { color: var(--cream); margin-bottom: 0.75rem; font-size: 1.1rem; }
+    .step p { color: var(--text-muted); font-size: 0.9rem; }
+
+    /* Difference Section */
+    .diff {
+      padding: 8rem 0;
+      background: var(--bg-warm);
+    }
+
+    .diff-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) { .diff-grid { grid-template-columns: 1fr; } }
+
+    .diff h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--cream);
+      margin-bottom: 1.5rem;
+    }
+
+    .diff p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+
+    .diff-image {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+
+    .diff-image img {
+      width: 100%;
+      display: block;
+    }
+
+    .comparison {
+      background: var(--surface);
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .comp-row { display: grid; grid-template-columns: 1fr 1fr; }
+
+    .comp-header {
+      padding: 1.25rem;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .comp-header.them {
+      background: rgba(255,255,255,0.03);
+      color: var(--text-muted);
+    }
+
+    .comp-header.us {
+      background: rgba(20, 184, 166, 0.1);
+      color: var(--accent);
+    }
+
+    .comp-item {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.9rem;
+    }
+
+    .comp-item.them { color: var(--text-muted); }
+    .comp-item.us { color: var(--text); }
+
+    /* Testimonial/Story Section */
+    .story {
+      padding: 8rem 0;
+      position: relative;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) { .story-grid { grid-template-columns: 1fr; } }
+
+    .story-image {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+
+    .story-image img {
+      width: 100%;
+      display: block;
+    }
+
+    .story-content blockquote {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-style: italic;
+      color: var(--cream);
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+    }
+
+    .story-content cite {
+      color: var(--text-muted);
+      font-style: normal;
+    }
+
+    /* CTA Section */
+    .cta {
+      padding: 8rem 0;
+      text-align: center;
+      position: relative;
+      background: var(--bg-warm);
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      height: 100%;
+      background: url('abstract-network-v2.webp') center/cover no-repeat;
+      opacity: 0.15;
+      pointer-events: none;
+    }
+
+    .cta h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      color: var(--cream);
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .cta p {
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--accent);
+      color: var(--bg);
+      padding: 1.25rem 2.5rem;
+      border-radius: 100px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+      position: relative;
+      cursor: pointer;
+      border: none;
+    }
+
+    .cta-button:hover {
+      background: var(--accent-glow);
+      transform: translateY(-3px);
+      box-shadow: 0 20px 50px rgba(20, 184, 166, 0.4);
+    }
+
+    /* Footer */
+    footer {
+      padding: 3rem 0;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* ElevenLabs Widget Overrides */
+    elevenlabs-convai {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <a href="#" class="logo">Spoken<span>Site</span></a>
+      <button class="nav-cta" onclick="startConversation()">Start Your Story</button>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-tag">Now accepting early customers</div>
+        <h1>You can spot a template<br>from a <em>mile away</em></h1>
+        <p class="hero-sub">We don't pick templates. We interview you, research your competitors, and build a site that could only be yours.</p>
+        <button class="hero-cta" onclick="startConversation()">
+          Tell Us Your Story
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="hero-bg">
+      <img src="abstract-conversation-flow.webp" alt="">
+    </div>
+  </section>
+
+  <section class="problem" id="problem">
+    <div class="container">
+      <div class="section-label">The Problem</div>
+      <h2>Every AI website builder does the same thing. Pick a template. Fill in blanks. Look like everyone else.</h2>
+      <div class="problem-grid">
+        <div class="problem-card">
+          <img src="fingerprint-unique.webp" alt="" class="problem-card-img">
+          <div class="problem-card-content">
+            <h3>Templates Lie</h3>
+            <p>They promise "custom" but deliver the same 12 layouts everyone else uses. Your business deserves better than variation #47.</p>
+          </div>
+        </div>
+        <div class="problem-card">
+          <img src="raw-to-refined.webp" alt="" class="problem-card-img">
+          <div class="problem-card-content">
+            <h3>AI Copy = Generic Copy</h3>
+            <p>When AI writes from prompts, it sounds like AI. When it writes from conversations, it sounds like you.</p>
+          </div>
+        </div>
+        <div class="problem-card">
+          <img src="abstract-network-v2.webp" alt="" class="problem-card-img">
+          <div class="problem-card-content">
+            <h3>Zero Research</h3>
+            <p>Nobody studies what's actually working in your space. They just guess. We look at your competitors first.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="process" id="process">
+    <div class="container">
+      <div class="section-label">How It Works</div>
+      <h2>A conversation, not a form</h2>
+      <p class="process-sub">5 minutes of talking beats 50 form fields</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+              <line x1="12" y1="19" x2="12" y2="23"/>
+              <line x1="8" y1="23" x2="16" y2="23"/>
+            </svg>
+          </div>
+          <h3>We Talk</h3>
+          <p>A 5-minute voice conversation about your business, your story, and where you're headed.</p>
+        </div>
+        <div class="step">
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              <line x1="8" y1="11" x2="14" y2="11"/>
+              <line x1="11" y1="8" x2="11" y2="14"/>
+            </svg>
+          </div>
+          <h3>We Research</h3>
+          <p>AI analyzes competitors in your space. What works. What doesn't. What gaps you can own.</p>
+        </div>
+        <div class="step">
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 19l7-7 3 3-7 7-3-3z"/>
+              <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
+              <path d="M2 2l7.586 7.586"/>
+              <circle cx="11" cy="11" r="2"/>
+            </svg>
+          </div>
+          <h3>We Design</h3>
+          <p>Three unique directions based on your voice and the research. You pick your favorite.</p>
+        </div>
+        <div class="step">
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
+              <path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
+              <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/>
+              <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>
+            </svg>
+          </div>
+          <h3>We Build</h3>
+          <p>Custom images, copy in your voice, and a site that could only belong to you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="diff" id="difference">
+    <div class="container">
+      <div class="diff-grid">
+        <div>
+          <div class="section-label">The Difference</div>
+          <h2>Research-first beats template-first</h2>
+          <p>Other builders start with "pick a template." We start with "tell me your story" and "let's see what's working." The result? A site that's truly yours.</p>
+          <div class="comparison">
+            <div class="comp-row">
+              <div class="comp-header them">Template Builders</div>
+              <div class="comp-header us">SpokenSite</div>
+            </div>
+            <div class="comp-row">
+              <div class="comp-item them">Pick from 800 templates</div>
+              <div class="comp-item us">Research your competitors first</div>
+            </div>
+            <div class="comp-row">
+              <div class="comp-item them">Fill in form fields</div>
+              <div class="comp-item us">Have a real conversation</div>
+            </div>
+            <div class="comp-row">
+              <div class="comp-item them">Generic AI copy</div>
+              <div class="comp-item us">Copy in YOUR voice</div>
+            </div>
+            <div class="comp-row">
+              <div class="comp-item them">Stock photos</div>
+              <div class="comp-item us">Custom AI images</div>
+            </div>
+            <div class="comp-row">
+              <div class="comp-item them">Looks like everyone</div>
+              <div class="comp-item us">Looks like only you</div>
+            </div>
+          </div>
+        </div>
+        <div class="diff-image">
+          <img src="craftsman-forge.webp" alt="Crafting something unique">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="story">
+    <div class="container">
+      <div class="story-grid">
+        <div class="story-image">
+          <img src="entrepreneur-confident.webp" alt="Small business owner">
+        </div>
+        <div class="story-content">
+          <div class="section-label">Why We Built This</div>
+          <blockquote>"I want to do a business that can truly help people. I don't want a business that just gives me money. I want to help those who are trying to do neat things to better themselves."</blockquote>
+          <cite>— The vision behind SpokenSite</cite>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="start">
+    <div class="container">
+      <h2>Ready to sound like yourself?</h2>
+      <p>It starts with a 5-minute conversation.</p>
+      <button class="cta-button" onclick="startConversation()">
+        Let's Talk
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 SpokenSite. Built for people trying to do neat things.</p>
+      <p style="margin-top: 0.5rem;">An <a href="https://orionvoice.com" target="_blank">OrionVoice</a> product.</p>
+    </div>
+  </footer>
+
+  <!-- ElevenLabs Conversational AI Widget -->
+  <script src="https://elevenlabs.io/convai-widget/index.js" async></script>
+  <elevenlabs-convai agent-id="agent_5201ke72y6r1fpx9nv541p6d6tah"></elevenlabs-convai>
+
+  <script>
+    function startConversation() {
+      // Scroll to bottom where widget is, then trigger it
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      
+      // Try to trigger the ElevenLabs widget
+      setTimeout(() => {
+        const widget = document.querySelector('elevenlabs-convai');
+        if (widget && widget.shadowRoot) {
+          const button = widget.shadowRoot.querySelector('button');
+          if (button) button.click();
+        }
+      }, 500);
+    }
+  </script>
+</body>
+</html>
