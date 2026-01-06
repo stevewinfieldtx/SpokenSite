@@ -508,14 +508,6 @@
     footer a:hover {
       text-decoration: underline;
     }
-
-    /* ElevenLabs Widget Overrides */
-    elevenlabs-convai {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      z-index: 9999;
-    }
   </style>
 </head>
 <body>
@@ -701,27 +693,19 @@
   <footer>
     <div class="container">
       <p>© 2025 SpokenSite. Built for people trying to do neat things.</p>
-      <p style="margin-top: 0.5rem;">An <a href="https://orionvoice.com" target="_blank">OrionVoice</a> product.</p>
+      <p style="margin-top: 0.5rem;">An <a href="https://orionvoiceai.com" target="_blank">OrionVoiceAI</a> product.</p>
     </div>
   </footer>
 
-  <!-- ElevenLabs Conversational AI Widget -->
-  <script src="https://elevenlabs.io/convai-widget/index.js" async></script>
-  <elevenlabs-convai agent-id="agent_5201ke72y6r1fpx9nv541p6d6tah"></elevenlabs-convai>
-
+  <!-- ElevenLabs Conversational AI - Nick the Interviewer -->
   <script>
     function startConversation() {
-      // Scroll to bottom where widget is, then trigger it
-      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-      
-      // Try to trigger the ElevenLabs widget
-      setTimeout(() => {
-        const widget = document.querySelector('elevenlabs-convai');
-        if (widget && widget.shadowRoot) {
-          const button = widget.shadowRoot.querySelector('button');
-          if (button) button.click();
-        }
-      }, 500);
+      // Open ElevenLabs Talk-To page with Nick the interviewer
+      window.open(
+        'https://elevenlabs.io/app/talk-to?agent_id=agent_5201ke72y6r1fpx9nv541p6d6tah',
+        'SpokenSite Interview',
+        'width=400,height=700,scrollbars=no,resizable=yes'
+      );
     }
   </script>
 </body>
