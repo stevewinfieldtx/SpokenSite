@@ -8,6 +8,8 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎙️</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   
+  <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+  
   <style>
     :root {
       --bg: #1e293b;
@@ -193,6 +195,119 @@
       object-fit: cover;
       mask-image: linear-gradient(to left, rgba(0,0,0,0.8) 0%, transparent 80%);
       -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.8) 0%, transparent 80%);
+    }
+
+    /* Conversation Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      background: var(--bg-warm);
+      border-radius: 24px;
+      padding: 2rem;
+      max-width: 450px;
+      width: 90%;
+      position: relative;
+      border: 1px solid rgba(20, 184, 166, 0.3);
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5), 0 0 60px rgba(20, 184, 166, 0.15);
+      animation: slideUp 0.4s ease;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: var(--surface);
+      border: none;
+      color: var(--text-muted);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .modal-close:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .modal-header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-header h3 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.75rem;
+      color: var(--cream);
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .widget-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 350px;
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 1rem;
+      overflow: hidden;
+    }
+
+    .modal-footer {
+      text-align: center;
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .modal-footer p {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .modal-footer .mic-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--accent);
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
     }
 
     /* Problem Section */
@@ -512,6 +627,8 @@
   </style>
 </head>
 <body>
+  <elevenlabs-convai agent-id="agent_5201ke72y6r1fpx9nv541p6d6tah"></elevenlabs-convai>
+
   <nav>
     <div class="container">
       <a href="#" class="logo">Spoken<span>Site</span></a>
@@ -535,6 +652,40 @@
       <img src="abstract-conversation-flow.webp" alt="">
     </div>
   </section>
+
+  <div class="modal-overlay" id="conversationModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeConversation()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+      <div class="modal-header">
+        <h3>Let's Talk</h3>
+        <p>Click the microphone and tell us about your business</p>
+      </div>
+      <div class="widget-container">
+        <iframe 
+          src="https://elevenlabs.io/convai/agent_5201ke72y6r1fpx9nv541p6d6tah" 
+          width="100%" 
+          height="400" 
+          frameborder="0" 
+          allow="microphone; camera"
+          style="border-radius: 12px;"
+        ></iframe>
+      </div>
+      <div class="modal-footer">
+        <p>🎙️ Voice conversation powered by AI</p>
+        <p class="mic-hint">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+          </svg>
+          Click the orb to begin
+        </p>
+      </div>
+    </div>
+  </div>
 
   <section class="problem" id="problem">
     <div class="container">
@@ -700,22 +851,28 @@
 
   <script>
     function openConversation() {
-      // The reliable fix: Open the agent in a focused popup window.
-      // This ensures mic permissions work instantly and the UI never breaks.
-      const agentUrl = "https://elevenlabs.io/convai/agent_5201ke72y6r1fpx9nv541p6d6tah";
-      const width = 400;
-      const height = 700;
-      
-      // Center the popup on the user's screen
-      const left = (window.screen.width - width) / 2;
-      const top = (window.screen.height - height) / 2;
-      
-      window.open(
-        agentUrl,
-        'SpokenSite_Interview',
-        `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes,status=yes`
-      );
+      document.getElementById('conversationModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
     }
+
+    function closeConversation() {
+      document.getElementById('conversationModal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Close modal on escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeConversation();
+      }
+    });
+
+    // Close modal when clicking outside
+    document.getElementById('conversationModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeConversation();
+      }
+    });
   </script>
 </body>
 </html>
