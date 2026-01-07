@@ -22,7 +22,6 @@
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -45,7 +44,6 @@
 
     .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
 
-    /* Navigation */
     nav {
       padding: 1.5rem 0;
       position: fixed;
@@ -82,7 +80,6 @@
       box-shadow: 0 10px 30px rgba(20, 184, 166, 0.3);
     }
 
-    /* Hero Section */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -163,15 +160,11 @@
       box-shadow: 0 15px 40px rgba(20, 184, 166, 0.4);
     }
 
-    .hero-cta svg { transition: transform 0.3s ease; }
-    .hero-cta:hover svg { transform: translateX(4px); }
-
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Hero background image */
     .hero-bg {
       position: absolute;
       right: -10%;
@@ -191,7 +184,6 @@
       -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.8) 0%, transparent 80%);
     }
 
-    /* Problem Section */
     .problem {
       padding: 8rem 0;
       background: var(--bg-warm);
@@ -248,9 +240,7 @@
       opacity: 0.8;
     }
 
-    .problem-card-content {
-      padding: 1.75rem;
-    }
+    .problem-card-content { padding: 1.75rem; }
 
     .problem-card h3 {
       color: var(--text);
@@ -260,7 +250,6 @@
 
     .problem-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; }
 
-    /* Process Section */
     .process { padding: 8rem 0; }
 
     .process h2 {
@@ -316,139 +305,12 @@
     .step h3 { color: var(--cream); margin-bottom: 0.75rem; font-size: 1.1rem; }
     .step p { color: var(--text-muted); font-size: 0.9rem; }
 
-    /* Difference Section */
-    .diff {
-      padding: 8rem 0;
-      background: var(--bg-warm);
-    }
-
-    .diff-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
-    }
-
-    @media (max-width: 768px) { .diff-grid { grid-template-columns: 1fr; } }
-
-    .diff h2 {
-      font-family: 'Instrument Serif', serif;
-      font-size: clamp(2rem, 4vw, 3rem);
-      color: var(--cream);
-      margin-bottom: 1.5rem;
-    }
-
-    .diff p {
-      color: var(--text-muted);
-      font-size: 1.1rem;
-      margin-bottom: 2rem;
-    }
-
-    .diff-image {
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-    }
-
-    .diff-image img {
-      width: 100%;
-      display: block;
-    }
-
-    .comparison {
-      background: var(--surface);
-      border-radius: 20px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .comp-row { display: grid; grid-template-columns: 1fr 1fr; }
-
-    .comp-header {
-      padding: 1.25rem;
-      font-weight: 600;
-      text-align: center;
-    }
-
-    .comp-header.them {
-      background: rgba(255,255,255,0.03);
-      color: var(--text-muted);
-    }
-
-    .comp-header.us {
-      background: rgba(20, 184, 166, 0.1);
-      color: var(--accent);
-    }
-
-    .comp-item {
-      padding: 1rem 1.25rem;
-      border-top: 1px solid rgba(255,255,255,0.05);
-      font-size: 0.9rem;
-    }
-
-    .comp-item.them { color: var(--text-muted); }
-    .comp-item.us { color: var(--text); }
-
-    /* Testimonial/Story Section */
-    .story {
-      padding: 8rem 0;
-      position: relative;
-    }
-
-    .story-grid {
-      display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: 4rem;
-      align-items: center;
-    }
-
-    @media (max-width: 768px) { .story-grid { grid-template-columns: 1fr; } }
-
-    .story-image {
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-    }
-
-    .story-image img {
-      width: 100%;
-      display: block;
-    }
-
-    .story-content blockquote {
-      font-family: 'Instrument Serif', serif;
-      font-size: clamp(1.5rem, 3vw, 2rem);
-      font-style: italic;
-      color: var(--cream);
-      line-height: 1.5;
-      margin-bottom: 1.5rem;
-    }
-
-    .story-content cite {
-      color: var(--text-muted);
-      font-style: normal;
-    }
-
-    /* CTA Section */
     .cta {
       padding: 8rem 0;
       text-align: center;
       position: relative;
       background: var(--bg-warm);
       scroll-margin-top: 50px;
-    }
-
-    .cta::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      height: 100%;
-      background: url('abstract-network-v2.webp') center/cover no-repeat;
-      opacity: 0.15;
-      pointer-events: none;
     }
 
     .cta h2 {
@@ -459,7 +321,7 @@
       position: relative;
     }
 
-    .cta p {
+    .cta > .container > p {
       color: var(--text-muted);
       font-size: 1.2rem;
       margin-bottom: 2.5rem;
@@ -475,15 +337,9 @@
       padding: 2rem;
       border-radius: 16px;
       max-width: 500px;
-      margin: 0 auto;
+      margin: 0 auto 2rem;
       box-shadow: 0 0 30px rgba(20, 184, 166, 0.15);
       position: relative;
-      animation: bounce 2s infinite ease-in-out;
-    }
-    
-    @keyframes bounce {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-5px); }
     }
 
     .instruction-box h3 {
@@ -492,9 +348,48 @@
       font-size: 1.4rem;
     }
 
+    .instruction-box p {
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
     .instruction-box strong {
       color: var(--cream);
       font-weight: 700;
+    }
+
+    .generate-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-glow) 100%);
+      color: var(--bg);
+      padding: 1.25rem 2.5rem;
+      border-radius: 100px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.2rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 30px rgba(20, 184, 166, 0.4);
+      animation: pulseBtn 2s infinite;
+    }
+
+    .generate-btn:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 15px 40px rgba(20, 184, 166, 0.5);
+    }
+
+    .generate-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      animation: none;
+    }
+
+    @keyframes pulseBtn {
+      0%, 100% { box-shadow: 0 8px 30px rgba(20, 184, 166, 0.4); }
+      50% { box-shadow: 0 8px 50px rgba(20, 184, 166, 0.6); }
     }
 
     /* Processing Modal */
@@ -505,60 +400,96 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.9);
+      background: rgba(0, 0, 0, 0.95);
       z-index: 9999;
       justify-content: center;
       align-items: center;
     }
 
-    .modal-overlay.active {
-      display: flex;
-    }
+    .modal-overlay.active { display: flex; }
 
     .modal-content {
       background: var(--surface);
-      border: 1px solid var(--accent);
+      border: 2px solid var(--accent);
       border-radius: 24px;
       padding: 3rem;
       text-align: center;
-      max-width: 500px;
-      box-shadow: 0 0 60px rgba(20, 184, 166, 0.3);
+      max-width: 550px;
+      width: 90%;
+      box-shadow: 0 0 80px rgba(20, 184, 166, 0.3);
     }
 
-    .modal-spinner {
-      width: 80px;
-      height: 80px;
-      border: 4px solid var(--surface);
-      border-top-color: var(--accent);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 2rem;
+    .modal-icon {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+      animation: bounce 1s infinite;
     }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
     }
 
     .modal-content h2 {
       font-family: 'Instrument Serif', serif;
       color: var(--cream);
       font-size: 2rem;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
     }
 
-    .modal-content p {
+    .status-log {
+      background: var(--bg);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: left;
+      max-height: 300px;
+      overflow-y: auto;
+      margin-bottom: 1.5rem;
+    }
+
+    .status-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 0;
       color: var(--text-muted);
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      opacity: 0;
+      animation: slideIn 0.3s ease forwards;
     }
 
-    .modal-status {
-      color: var(--accent);
-      font-weight: 600;
-      margin-top: 1.5rem;
+    .status-item:last-child { border-bottom: none; }
+
+    .status-item.done { color: var(--success); }
+    .status-item.active { color: var(--accent); }
+    .status-item.error { color: #ef4444; }
+
+    .status-item .icon {
+      width: 20px;
+      text-align: center;
     }
 
-    /* Footer */
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-10px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: var(--bg);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-glow));
+      border-radius: 3px;
+      transition: width 0.5s ease;
+    }
+
     footer {
       padding: 3rem 0;
       border-top: 1px solid rgba(255,255,255,0.05);
@@ -572,9 +503,7 @@
       text-decoration: none;
     }
 
-    footer a:hover {
-      text-decoration: underline;
-    }
+    footer a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -583,11 +512,12 @@
   <!-- Processing Modal -->
   <div class="modal-overlay" id="processingModal">
     <div class="modal-content">
-      <div class="modal-spinner"></div>
-      <h2>Creating Your Websites</h2>
-      <p>Our AI is designing 3 unique website concepts based on your interview.</p>
-      <p>This usually takes 30-60 seconds...</p>
-      <div class="modal-status" id="modalStatus">Fetching your transcript...</div>
+      <div class="modal-icon" id="modalIcon">🎨</div>
+      <h2 id="modalTitle">Creating Your Websites</h2>
+      <div class="status-log" id="statusLog"></div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+      </div>
     </div>
   </div>
 
@@ -653,48 +583,28 @@
       <div class="steps">
         <div class="step">
           <div class="step-icon">
-            <svg viewBox="0 0 24 24">
-              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
-              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-              <line x1="12" y1="19" x2="12" y2="23"/>
-              <line x1="8" y1="23" x2="16" y2="23"/>
-            </svg>
+            <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
           </div>
           <h3>We Talk</h3>
           <p>A 5-minute voice conversation about your business, your story, and where you're headed.</p>
         </div>
         <div class="step">
           <div class="step-icon">
-            <svg viewBox="0 0 24 24">
-              <circle cx="11" cy="11" r="8"/>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-              <line x1="8" y1="11" x2="14" y2="11"/>
-              <line x1="11" y1="8" x2="11" y2="14"/>
-            </svg>
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           </div>
           <h3>We Research</h3>
           <p>AI analyzes competitors in your space. What works. What doesn't. What gaps you can own.</p>
         </div>
         <div class="step">
           <div class="step-icon">
-            <svg viewBox="0 0 24 24">
-              <path d="M12 19l7-7 3 3-7 7-3-3z"/>
-              <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
-              <path d="M2 2l7.586 7.586"/>
-              <circle cx="11" cy="11" r="2"/>
-            </svg>
+            <svg viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
           </div>
           <h3>We Design</h3>
           <p>Three unique directions based on your voice and the research. You pick your favorite.</p>
         </div>
         <div class="step">
           <div class="step-icon">
-            <svg viewBox="0 0 24 24">
-              <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
-              <path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
-              <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/>
-              <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>
-            </svg>
+            <svg viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>
           </div>
           <h3>We Build</h3>
           <p>Custom images, copy in your voice, and a site that could only belong to you.</p>
@@ -703,74 +613,20 @@
     </div>
   </section>
 
-  <section class="diff" id="difference">
-    <div class="container">
-      <div class="diff-grid">
-        <div>
-          <div class="section-label">The Difference</div>
-          <h2>Research-first beats template-first</h2>
-          <p>Other builders start with "pick a template." We start with "tell me your story" and "let's see what's working." The result? A site that's truly yours.</p>
-          <div class="comparison">
-            <div class="comp-row">
-              <div class="comp-header them">Template Builders</div>
-              <div class="comp-header us">SpokenSite</div>
-            </div>
-            <div class="comp-row">
-              <div class="comp-item them">Pick from 800 templates</div>
-              <div class="comp-item us">Research your competitors first</div>
-            </div>
-            <div class="comp-row">
-              <div class="comp-item them">Fill in form fields</div>
-              <div class="comp-item us">Have a real conversation</div>
-            </div>
-            <div class="comp-row">
-              <div class="comp-item them">Generic AI copy</div>
-              <div class="comp-item us">Copy in YOUR voice</div>
-            </div>
-            <div class="comp-row">
-              <div class="comp-item them">Stock photos</div>
-              <div class="comp-item us">Custom AI images</div>
-            </div>
-            <div class="comp-row">
-              <div class="comp-item them">Looks like everyone</div>
-              <div class="comp-item us">Looks like only you</div>
-            </div>
-          </div>
-        </div>
-        <div class="diff-image">
-          <img src="craftsman-forge.webp" alt="Crafting something unique">
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="story">
-    <div class="container">
-      <div class="story-grid">
-        <div class="story-image">
-          <img src="entrepreneur-confident.webp" alt="Small business owner">
-        </div>
-        <div class="story-content">
-          <div class="section-label">Why We Built This</div>
-          <blockquote>"I want to do a business that can truly help people. I don't want a business that just gives me money. I want to help those who are trying to do neat things to better themselves."</blockquote>
-          <cite>— The vision behind SpokenSite</cite>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section class="cta" id="start">
     <div class="container">
       <h2>Your unique site starts with your unique story.</h2>
-      <p>We don't use templates or forms. We use conversation.</p>
+      <p>Click the glowing orb to start your interview. When you're done, click the button below.</p>
       
       <div class="instruction-box">
-        <h3>👇 Start Here</h3>
-        <p>Click the <strong>glowing orb in the bottom-right corner</strong> to begin your interview.</p>
-        <p style="font-size: 0.9rem; margin-top: 0.5rem; color: var(--text-muted);">
-          Our system will listen to you and build a custom website that could only belong to you.
-        </p>
+        <h3>👇 Step 1: Start Your Interview</h3>
+        <p>Click the <strong>glowing orb in the bottom-right corner</strong> to begin.</p>
+        <p style="font-size: 0.85rem; margin-top: 0.75rem;">Tell us about your business, what makes you different, and who you serve.</p>
       </div>
+
+      <button class="generate-btn" id="generateBtn" onclick="startGeneration()">
+        ✨ I Finished My Interview - Build My Sites!
+      </button>
     </div>
   </section>
 
@@ -784,92 +640,125 @@
   <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
   
   <script>
-    // Wait for widget to load
-    let conversationId = null;
-    
+    const statusMessages = [
+      { text: "Connecting to our AI overlords...", icon: "🛸", delay: 500 },
+      { text: "Found your interview! Excellent taste in conversation.", icon: "🎤", delay: 1500 },
+      { text: "Parsing your transcript...", icon: "📜", delay: 800 },
+      { text: "Teaching AI about your business...", icon: "🧠", delay: 1200 },
+      { text: "Grabbing a quick coffee break...", icon: "☕", delay: 600 },
+      { text: "Analyzing your unique value proposition...", icon: "💎", delay: 1000 },
+      { text: "Researching color psychology...", icon: "🎨", delay: 800 },
+      { text: "Stretching our creative muscles...", icon: "💪", delay: 700 },
+      { text: "Designing Modern & Bold version...", icon: "🚀", delay: 2000 },
+      { text: "Making sure the fonts are *chef's kiss*...", icon: "👨‍🍳", delay: 600 },
+      { text: "Designing Classic & Professional version...", icon: "🏛️", delay: 2000 },
+      { text: "Adding that trustworthy navy blue...", icon: "💙", delay: 500 },
+      { text: "Designing Warm & Inviting version...", icon: "🤝", delay: 2000 },
+      { text: "Sprinkling in some terracotta magic...", icon: "✨", delay: 500 },
+      { text: "Quality checking everything...", icon: "🔍", delay: 800 },
+      { text: "Polishing the pixels...", icon: "💅", delay: 600 },
+      { text: "Saving your masterpieces...", icon: "💾", delay: 1000 },
+      { text: "Almost there! Preparing your preview...", icon: "🎁", delay: 800 }
+    ];
+
+    let currentStatus = 0;
+    let statusInterval;
+
     function showModal() {
       document.getElementById('processingModal').classList.add('active');
+      document.getElementById('statusLog').innerHTML = '';
+      currentStatus = 0;
+      updateProgress(0);
     }
-    
+
     function hideModal() {
       document.getElementById('processingModal').classList.remove('active');
     }
-    
-    function updateStatus(text) {
-      document.getElementById('modalStatus').textContent = text;
+
+    function addStatus(text, icon, isActive = true, isDone = false, isError = false) {
+      const log = document.getElementById('statusLog');
+      const item = document.createElement('div');
+      item.className = 'status-item' + (isDone ? ' done' : '') + (isActive ? ' active' : '') + (isError ? ' error' : '');
+      item.innerHTML = `<span class="icon">${isDone ? '✓' : icon}</span><span>${text}</span>`;
+      log.appendChild(item);
+      log.scrollTop = log.scrollHeight;
     }
-    
-    async function generateWebsites(convId) {
+
+    function updateProgress(percent) {
+      document.getElementById('progressFill').style.width = percent + '%';
+    }
+
+    function markLastAsDone() {
+      const items = document.querySelectorAll('.status-item');
+      if (items.length > 0) {
+        const last = items[items.length - 1];
+        last.classList.remove('active');
+        last.classList.add('done');
+        last.querySelector('.icon').textContent = '✓';
+      }
+    }
+
+    async function runStatusAnimation(totalDuration) {
+      const progressPerItem = 100 / statusMessages.length;
+      
+      for (let i = 0; i < statusMessages.length; i++) {
+        const msg = statusMessages[i];
+        
+        if (i > 0) markLastAsDone();
+        addStatus(msg.text, msg.icon, true);
+        updateProgress((i + 1) * progressPerItem);
+        
+        await new Promise(resolve => setTimeout(resolve, msg.delay));
+      }
+    }
+
+    async function startGeneration() {
+      const btn = document.getElementById('generateBtn');
+      btn.disabled = true;
+      btn.textContent = '⏳ Working on it...';
+      
       showModal();
-      updateStatus('Fetching your transcript...');
       
-      // Wait a few seconds for ElevenLabs to process the transcript
-      await new Promise(resolve => setTimeout(resolve, 5000));
-      
-      updateStatus('Generating your 3 website designs...');
+      // Start the fun status animation
+      const animationPromise = runStatusAnimation();
       
       try {
-        const response = await fetch('/api/webhook', {
+        // Actually call the API
+        const response = await fetch('/api/generate-from-latest', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ conversation_id: convId })
+          headers: { 'Content-Type': 'application/json' }
         });
         
         const data = await response.json();
         
+        // Wait for animation to catch up a bit
+        await animationPromise;
+        
         if (data.success && data.previewUrl) {
-          updateStatus('Done! Redirecting to your designs...');
+          markLastAsDone();
+          addStatus("Done! Your websites are ready! 🎉", "🎉", false, true);
+          updateProgress(100);
+          
+          document.getElementById('modalIcon').textContent = '🎉';
+          document.getElementById('modalTitle').textContent = 'Your Websites Are Ready!';
+          
           await new Promise(resolve => setTimeout(resolve, 1500));
           window.location.href = data.previewUrl;
         } else {
-          updateStatus('Error: ' + (data.error || 'Unknown error'));
-          console.error('Generation failed:', data);
-          setTimeout(hideModal, 3000);
+          throw new Error(data.error || data.details || 'Something went wrong');
         }
       } catch (error) {
-        updateStatus('Error: ' + error.message);
-        console.error('Request failed:', error);
-        setTimeout(hideModal, 3000);
+        markLastAsDone();
+        addStatus("Oops! " + error.message, "❌", false, false, true);
+        document.getElementById('modalIcon').textContent = '😅';
+        document.getElementById('modalTitle').textContent = 'Hit a Snag...';
+        
+        btn.disabled = false;
+        btn.textContent = '✨ I Finished My Interview - Build My Sites!';
+        
+        setTimeout(hideModal, 4000);
       }
     }
-    
-    // Listen for ElevenLabs widget events
-    document.addEventListener('DOMContentLoaded', function() {
-      // Check for widget and attach listeners
-      const checkWidget = setInterval(() => {
-        const widget = document.querySelector('elevenlabs-convai');
-        if (widget) {
-          clearInterval(checkWidget);
-          
-          // Listen for conversation events
-          widget.addEventListener('elevenlabs-convai:conversation-started', (e) => {
-            console.log('Conversation started:', e.detail);
-            conversationId = e.detail?.conversationId || e.detail?.conversation_id;
-          });
-          
-          widget.addEventListener('elevenlabs-convai:conversation-ended', (e) => {
-            console.log('Conversation ended:', e.detail);
-            const convId = e.detail?.conversationId || e.detail?.conversation_id || conversationId;
-            if (convId) {
-              generateWebsites(convId);
-            } else {
-              console.error('No conversation ID found');
-            }
-          });
-          
-          widget.addEventListener('elevenlabs-convai:call-ended', (e) => {
-            console.log('Call ended:', e.detail);
-            const convId = e.detail?.conversationId || e.detail?.conversation_id || conversationId;
-            if (convId) {
-              generateWebsites(convId);
-            }
-          });
-          
-          console.log('ElevenLabs widget event listeners attached');
-        }
-      }, 500);
-    });
   </script>
-
 </body>
 </html>
