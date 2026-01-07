@@ -8,6 +8,8 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎙️</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   
+  <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+  
   <style>
     :root {
       --bg: #1e293b;
@@ -73,8 +75,6 @@
       text-decoration: none;
       font-weight: 600;
       transition: all 0.3s ease;
-      cursor: pointer;
-      border: none;
       font-size: 1rem;
     }
 
@@ -157,8 +157,6 @@
       font-size: 1.1rem;
       transition: all 0.3s ease;
       animation: fadeUp 0.8s ease-out 0.3s backwards;
-      cursor: pointer;
-      border: none;
     }
 
     .hero-cta:hover {
@@ -193,119 +191,6 @@
       object-fit: cover;
       mask-image: linear-gradient(to left, rgba(0,0,0,0.8) 0%, transparent 80%);
       -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.8) 0%, transparent 80%);
-    }
-
-    /* Conversation Modal */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(8px);
-      z-index: 9999;
-      align-items: center;
-      justify-content: center;
-      animation: fadeIn 0.3s ease;
-    }
-
-    .modal-overlay.active {
-      display: flex;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    .modal-content {
-      background: var(--bg-warm);
-      border-radius: 24px;
-      padding: 2rem;
-      max-width: 450px;
-      width: 90%;
-      position: relative;
-      border: 1px solid rgba(20, 184, 166, 0.3);
-      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5), 0 0 60px rgba(20, 184, 166, 0.15);
-      animation: slideUp 0.4s ease;
-    }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(30px) scale(0.95); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: var(--surface);
-      border: none;
-      color: var(--text-muted);
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s ease;
-    }
-
-    .modal-close:hover {
-      background: var(--accent);
-      color: var(--bg);
-    }
-
-    .modal-header {
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-
-    .modal-header h3 {
-      font-family: 'Instrument Serif', serif;
-      font-size: 1.75rem;
-      color: var(--cream);
-      margin-bottom: 0.5rem;
-    }
-
-    .modal-header p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
-
-    .widget-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 400px;
-      background: var(--surface);
-      border-radius: 16px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .modal-footer {
-      text-align: center;
-      margin-top: 1.5rem;
-      padding-top: 1rem;
-      border-top: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .modal-footer p {
-      color: var(--text-muted);
-      font-size: 0.85rem;
-    }
-
-    .modal-footer .mic-hint {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: var(--accent);
-      font-size: 0.9rem;
-      margin-top: 0.5rem;
     }
 
     /* Problem Section */
@@ -552,6 +437,7 @@
       text-align: center;
       position: relative;
       background: var(--bg-warm);
+      scroll-margin-top: 50px; /* Offset for smooth scroll */
     }
 
     .cta::before {
@@ -580,29 +466,37 @@
       font-size: 1.2rem;
       margin-bottom: 2.5rem;
       position: relative;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
-    .cta-button {
-      display: inline-flex;
-      align-items: center;
-      gap: 1rem;
-      background: var(--accent);
-      color: var(--bg);
-      padding: 1.25rem 2.5rem;
-      border-radius: 100px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1.2rem;
-      transition: all 0.3s ease;
+    .instruction-box {
+      background: var(--surface);
+      border: 1px solid var(--accent);
+      padding: 2rem;
+      border-radius: 16px;
+      max-width: 500px;
+      margin: 0 auto;
+      box-shadow: 0 0 30px rgba(20, 184, 166, 0.15);
       position: relative;
-      cursor: pointer;
-      border: none;
+      animation: bounce 2s infinite ease-in-out;
+    }
+    
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
     }
 
-    .cta-button:hover {
-      background: var(--accent-glow);
-      transform: translateY(-3px);
-      box-shadow: 0 20px 50px rgba(20, 184, 166, 0.4);
+    .instruction-box h3 {
+      color: var(--accent);
+      margin-bottom: 1rem;
+      font-size: 1.4rem;
+    }
+
+    .instruction-box strong {
+      color: var(--cream);
+      font-weight: 700;
     }
 
     /* Footer */
@@ -625,10 +519,12 @@
   </style>
 </head>
 <body>
+  <elevenlabs-convai agent-id="agent_5201ke72y6r1fpx9nv541p6d6tah"></elevenlabs-convai>
+
   <nav>
     <div class="container">
       <a href="#" class="logo">Spoken<span>Site</span></a>
-      <button class="nav-cta" onclick="openConversation()">Start Your Story</button>
+      <a href="#start" class="nav-cta">Start Your Story</a>
     </div>
   </nav>
 
@@ -638,43 +534,16 @@
         <div class="hero-tag">Now accepting early customers</div>
         <h1>You can spot a template<br>from a <em>mile away</em></h1>
         <p class="hero-sub">We don't pick templates. We interview you, research your competitors, and build a site that could only be yours.</p>
-        <button class="hero-cta" onclick="openConversation()">
+        <a href="#start" class="hero-cta">
           Tell Us Your Story
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
+        </a>
       </div>
     </div>
     <div class="hero-bg">
       <img src="abstract-conversation-flow.webp" alt="">
     </div>
   </section>
-
-  <div class="modal-overlay" id="conversationModal">
-    <div class="modal-content">
-      <button class="modal-close" onclick="closeConversation()">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M18 6L6 18M6 6l12 12"/>
-        </svg>
-      </button>
-      <div class="modal-header">
-        <h3>Let's Talk</h3>
-        <p>Click the microphone below to start</p>
-      </div>
-      <div class="widget-container">
-        <iframe 
-          src="https://elevenlabs.io/convai-widget?agentId=agent_5201ke72y6r1fpx9nv541p6d6tah" 
-          width="100%" 
-          height="100%" 
-          frameborder="0" 
-          allow="microphone; camera; autoplay; clipboard-write; encrypted-media"
-          style="position: absolute; top: 0; left: 0;"
-        ></iframe>
-      </div>
-      <div class="modal-footer">
-        <p>🎙️ Voice conversation powered by AI</p>
-      </div>
-    </div>
-  </div>
 
   <section class="problem" id="problem">
     <div class="container">
@@ -822,12 +691,16 @@
 
   <section class="cta" id="start">
     <div class="container">
-      <h2>Ready to sound like yourself?</h2>
-      <p>It starts with a 5-minute conversation.</p>
-      <button class="cta-button" onclick="openConversation()">
-        Let's Talk
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </button>
+      <h2>Your unique site starts with your unique story.</h2>
+      <p>We don't use templates or forms. We use conversation.</p>
+      
+      <div class="instruction-box">
+        <h3>👇 Start Here</h3>
+        <p>Click the <strong>glowing orb in the bottom-right corner</strong> to begin your interview.</p>
+        <p style="font-size: 0.9rem; margin-top: 0.5rem; color: var(--text-muted);">
+          Our system will listen to you and build a custom website that could only belong to you.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -838,30 +711,5 @@
     </div>
   </footer>
 
-  <script>
-    function openConversation() {
-      document.getElementById('conversationModal').classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeConversation() {
-      document.getElementById('conversationModal').classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    // Close modal on escape key
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        closeConversation();
-      }
-    });
-
-    // Close modal when clicking outside
-    document.getElementById('conversationModal').addEventListener('click', function(e) {
-      if (e.target === this) {
-        closeConversation();
-      }
-    });
-  </script>
 </body>
 </html>
