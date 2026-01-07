@@ -1,11 +1,36 @@
-﻿// Vercel Serverless Function - ElevenLabs Webhook Handler
-// Generates 3 PREMIUM website concepts with real images and distinctive design
-
+﻿// Vercel Serverless Function - Fetch transcript from ElevenLabs and generate websites
 import crypto from 'crypto';
 
-const ELEVENLABS_WEBHOOK_SECRET = process.env.ELEVENLABS_WEBHOOK_SECRET;
+const ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY;
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
+
+async function getTranscriptFromElevenLabs(conversationId) {
+  const response = await fetch(`https://api.elevenlabs.io/v1/convai/conversations/${conversationId}`, {
+    headers: {
+      'xi-api-key': ELEVENLABS_API_KEY
+    }
+  });
+  
+  if (!response.ok) {
+    const error = await response.text();
+    throw new Error(`ElevenLabs API error: ${error}`);
+  }
+  
+  const data = await response.json();
+  
+  // Extract transcript from conversation data
+  if (data.transcript) {
+    return data.transcript;
+  }
+  
+  // If transcript is in messages format
+  if (data.messages && Array.isArray(data.messages)) {
+    return data.messages.map(m => `${m.role}: ${m.message || m.content || m.text}`).join('\n');
+  }
+  
+  throw new Error('No transcript found in conversation data');
+}
 
 async function saveToSupabase(sessionId, businessInfo, modern, classic, warm, conversationId) {
   const response = await fetch(`${SUPABASE_URL}/rest/v1/generated_sites`, {
@@ -36,32 +61,38 @@ async function saveToSupabase(sessionId, businessInfo, modern, classic, warm, co
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, ElevenLabs-Signature, X-ElevenLabs-Signature');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
-    console.log('Webhook received:', JSON.stringify(req.body, null, 2));
-
-    const { transcript, conversation_id, data, messages, conversation } = req.body;
-
-    let finalTranscript = transcript;
-    if (!finalTranscript && data?.transcript) finalTranscript = data.transcript;
-    if (!finalTranscript && conversation?.transcript) finalTranscript = conversation.transcript;
-    if (!finalTranscript && messages && Array.isArray(messages)) {
-      finalTranscript = messages.map(m => `${m.role || 'unknown'}: ${m.content || m.text || ''}`).join('\n');
+    const { conversation_id, transcript: providedTranscript } = req.body;
+    
+    if (!conversation_id && !providedTranscript) {
+      return res.status(400).json({ error: 'conversation_id or transcript required' });
     }
 
-    if (!finalTranscript) {
-      return res.status(200).json({ received: true, message: 'No transcript found', payload_keys: Object.keys(req.body) });
+    console.log('Processing request for conversation:', conversation_id);
+
+    // Get transcript - either provided or fetch from ElevenLabs
+    let transcript = providedTranscript;
+    if (!transcript && conversation_id) {
+      console.log('Fetching transcript from ElevenLabs...');
+      transcript = await getTranscriptFromElevenLabs(conversation_id);
     }
 
-    console.log('Transcript found, length:', finalTranscript.length);
+    if (!transcript) {
+      return res.status(400).json({ error: 'Could not get transcript' });
+    }
 
-    const websites = await generateWebsites(finalTranscript);
+    console.log('Transcript obtained, length:', transcript.length);
+
+    // Generate websites
+    const websites = await generateWebsites(transcript);
     const sessionId = conversation_id || `session_${Date.now()}`;
 
+    // Save to Supabase
     await saveToSupabase(
       sessionId,
       websites.businessInfo,
@@ -82,7 +113,7 @@ export default async function handler(req, res) {
     });
 
   } catch (error) {
-    console.error('Webhook error:', error);
+    console.error('Error:', error);
     return res.status(500).json({ error: 'Failed to process', details: error.message });
   }
 }

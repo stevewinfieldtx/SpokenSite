@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -7,8 +7,6 @@
   <meta name="description" content="We don't pick templates. We interview you, research your competitors, and build a site that could only be yours.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎙️</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
   
   <style>
     :root {
@@ -437,7 +435,7 @@
       text-align: center;
       position: relative;
       background: var(--bg-warm);
-      scroll-margin-top: 50px; /* Offset for smooth scroll */
+      scroll-margin-top: 50px;
     }
 
     .cta::before {
@@ -499,6 +497,67 @@
       font-weight: 700;
     }
 
+    /* Processing Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--surface);
+      border: 1px solid var(--accent);
+      border-radius: 24px;
+      padding: 3rem;
+      text-align: center;
+      max-width: 500px;
+      box-shadow: 0 0 60px rgba(20, 184, 166, 0.3);
+    }
+
+    .modal-spinner {
+      width: 80px;
+      height: 80px;
+      border: 4px solid var(--surface);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 2rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .modal-content h2 {
+      font-family: 'Instrument Serif', serif;
+      color: var(--cream);
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .modal-content p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-status {
+      color: var(--accent);
+      font-weight: 600;
+      margin-top: 1.5rem;
+    }
+
     /* Footer */
     footer {
       padding: 3rem 0;
@@ -520,6 +579,17 @@
 </head>
 <body>
   <elevenlabs-convai agent-id="agent_5201ke72y6r1fpx9nv541p6d6tah"></elevenlabs-convai>
+
+  <!-- Processing Modal -->
+  <div class="modal-overlay" id="processingModal">
+    <div class="modal-content">
+      <div class="modal-spinner"></div>
+      <h2>Creating Your Websites</h2>
+      <p>Our AI is designing 3 unique website concepts based on your interview.</p>
+      <p>This usually takes 30-60 seconds...</p>
+      <div class="modal-status" id="modalStatus">Fetching your transcript...</div>
+    </div>
+  </div>
 
   <nav>
     <div class="container">
@@ -710,6 +780,96 @@
       <p style="margin-top: 0.5rem;">An <a href="https://orionaitoolkit.com" target="_blank">OrionAI Toolkit</a> product.</p>
     </div>
   </footer>
+
+  <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+  
+  <script>
+    // Wait for widget to load
+    let conversationId = null;
+    
+    function showModal() {
+      document.getElementById('processingModal').classList.add('active');
+    }
+    
+    function hideModal() {
+      document.getElementById('processingModal').classList.remove('active');
+    }
+    
+    function updateStatus(text) {
+      document.getElementById('modalStatus').textContent = text;
+    }
+    
+    async function generateWebsites(convId) {
+      showModal();
+      updateStatus('Fetching your transcript...');
+      
+      // Wait a few seconds for ElevenLabs to process the transcript
+      await new Promise(resolve => setTimeout(resolve, 5000));
+      
+      updateStatus('Generating your 3 website designs...');
+      
+      try {
+        const response = await fetch('/api/webhook', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ conversation_id: convId })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success && data.previewUrl) {
+          updateStatus('Done! Redirecting to your designs...');
+          await new Promise(resolve => setTimeout(resolve, 1500));
+          window.location.href = data.previewUrl;
+        } else {
+          updateStatus('Error: ' + (data.error || 'Unknown error'));
+          console.error('Generation failed:', data);
+          setTimeout(hideModal, 3000);
+        }
+      } catch (error) {
+        updateStatus('Error: ' + error.message);
+        console.error('Request failed:', error);
+        setTimeout(hideModal, 3000);
+      }
+    }
+    
+    // Listen for ElevenLabs widget events
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check for widget and attach listeners
+      const checkWidget = setInterval(() => {
+        const widget = document.querySelector('elevenlabs-convai');
+        if (widget) {
+          clearInterval(checkWidget);
+          
+          // Listen for conversation events
+          widget.addEventListener('elevenlabs-convai:conversation-started', (e) => {
+            console.log('Conversation started:', e.detail);
+            conversationId = e.detail?.conversationId || e.detail?.conversation_id;
+          });
+          
+          widget.addEventListener('elevenlabs-convai:conversation-ended', (e) => {
+            console.log('Conversation ended:', e.detail);
+            const convId = e.detail?.conversationId || e.detail?.conversation_id || conversationId;
+            if (convId) {
+              generateWebsites(convId);
+            } else {
+              console.error('No conversation ID found');
+            }
+          });
+          
+          widget.addEventListener('elevenlabs-convai:call-ended', (e) => {
+            console.log('Call ended:', e.detail);
+            const convId = e.detail?.conversationId || e.detail?.conversation_id || conversationId;
+            if (convId) {
+              generateWebsites(convId);
+            }
+          });
+          
+          console.log('ElevenLabs widget event listeners attached');
+        }
+      }, 500);
+    });
+  </script>
 
 </body>
 </html>
