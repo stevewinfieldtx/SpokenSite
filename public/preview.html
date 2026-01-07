@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Website Options - SpokenSite</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #1e293b;
+      --surface: #334155;
+      --accent: #14b8a6;
+      --accent-glow: #2dd4bf;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --cream: #f8fafc;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .header {
+      padding: 2rem;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .header h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 2.5rem;
+      color: var(--cream);
+      margin-bottom: 0.5rem;
+    }
+
+    .header p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    .business-name {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      padding: 2rem;
+      background: var(--surface);
+    }
+
+    .tab {
+      padding: 1rem 2rem;
+      background: transparent;
+      border: 2px solid var(--text-muted);
+      border-radius: 100px;
+      color: var(--text);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .tab:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .tab.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--bg);
+    }
+
+    .preview-container {
+      padding: 2rem;
+    }
+
+    .preview-frame {
+      width: 100%;
+      height: calc(100vh - 250px);
+      min-height: 600px;
+      border: none;
+      border-radius: 12px;
+      background: white;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      padding: 2rem;
+      background: var(--surface);
+    }
+
+    .btn {
+      padding: 1rem 2rem;
+      border-radius: 100px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-glow);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 2px solid var(--text-muted);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      gap: 1.5rem;
+    }
+
+    .spinner {
+      width: 60px;
+      height: 60px;
+      border: 4px solid var(--surface);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+    }
+
+    /* Manual transcript input form */
+    .input-section {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: var(--surface);
+      border-radius: 16px;
+    }
+
+    .input-section h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.8rem;
+      color: var(--cream);
+      margin-bottom: 1rem;
+    }
+
+    .input-section textarea {
+      width: 100%;
+      height: 300px;
+      padding: 1rem;
+      border: 2px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 1rem;
+      resize: vertical;
+      margin-bottom: 1rem;
+    }
+
+    .input-section textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .input-section input {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .input-section input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div id="input-view">
+    <div class="header">
+      <h1>Generate Your Websites</h1>
+      <p>Paste your interview transcript below</p>
+    </div>
+    
+    <div class="input-section">
+      <h2>Interview Transcript</h2>
+      <input type="text" id="businessName" placeholder="Business Name (optional - we'll extract from transcript)">
+      <textarea id="transcript" placeholder="Paste the full interview transcript here..."></textarea>
+      <button class="btn btn-primary" onclick="generateWebsites()" id="generateBtn">
+        Generate 3 Website Concepts
+      </button>
+    </div>
+  </div>
+
+  <div id="loading-view" class="hidden">
+    <div class="loading">
+      <div class="spinner"></div>
+      <div class="loading-text">Creating your 3 unique website designs...</div>
+      <div class="loading-text" style="font-size: 0.9rem;">This takes about 30-60 seconds</div>
+    </div>
+  </div>
+
+  <div id="preview-view" class="hidden">
+    <div class="header">
+      <h1>Your Website Options</h1>
+      <p>We created 3 unique designs for <span class="business-name" id="displayBusinessName">your business</span></p>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" data-style="modern" onclick="switchTab('modern')">🚀 Modern & Bold</button>
+      <button class="tab" data-style="classic" onclick="switchTab('classic')">🏛️ Classic & Professional</button>
+      <button class="tab" data-style="warm" onclick="switchTab('warm')">🤝 Warm & Inviting</button>
+    </div>
+
+    <div class="preview-container">
+      <iframe id="previewFrame" class="preview-frame"></iframe>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-secondary" onclick="downloadCurrent()">Download This Design</button>
+      <button class="btn btn-secondary" onclick="downloadAll()">Download All 3</button>
+      <button class="btn btn-primary" onclick="selectDesign()">I Want This One!</button>
+    </div>
+  </div>
+
+  <script>
+    let generatedWebsites = null;
+    let currentStyle = 'modern';
+
+    async function generateWebsites() {
+      const transcript = document.getElementById('transcript').value.trim();
+      const businessName = document.getElementById('businessName').value.trim();
+
+      if (!transcript) {
+        alert('Please paste the interview transcript');
+        return;
+      }
+
+      // Show loading
+      document.getElementById('input-view').classList.add('hidden');
+      document.getElementById('loading-view').classList.remove('hidden');
+
+      try {
+        const response = await fetch('/api/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ transcript, businessName })
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to generate websites');
+        }
+
+        const data = await response.json();
+        generatedWebsites = data.websites;
+
+        // Update business name display
+        if (data.businessInfo?.name) {
+          document.getElementById('displayBusinessName').textContent = data.businessInfo.name;
+        }
+
+        // Show preview
+        document.getElementById('loading-view').classList.add('hidden');
+        document.getElementById('preview-view').classList.remove('hidden');
+
+        // Load first preview
+        switchTab('modern');
+
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to generate websites. Please try again.');
+        document.getElementById('loading-view').classList.add('hidden');
+        document.getElementById('input-view').classList.remove('hidden');
+      }
+    }
+
+    function switchTab(style) {
+      currentStyle = style;
+
+      // Update tabs
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.style === style);
+      });
+
+      // Update iframe
+      const frame = document.getElementById('previewFrame');
+      const html = generatedWebsites[style];
+      frame.srcdoc = html;
+    }
+
+    function downloadCurrent() {
+      const html = generatedWebsites[currentStyle];
+      const blob = new Blob([html], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `website-${currentStyle}.html`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function downloadAll() {
+      ['modern', 'classic', 'warm'].forEach(style => {
+        const html = generatedWebsites[style];
+        const blob = new Blob([html], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `website-${style}.html`;
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+    }
+
+    function selectDesign() {
+      const businessName = document.getElementById('displayBusinessName').textContent;
+      alert(`Great choice! The ${currentStyle} design for ${businessName} has been selected.\n\nNext steps:\n1. We'll refine the design based on your feedback\n2. Add your real photos and content\n3. Deploy to your domain`);
+    }
+
+    // Check for pre-loaded data (from webhook)
+    const urlParams = new URLSearchParams(window.location.search);
+    const sessionId = urlParams.get('id');
+    if (sessionId) {
+      // TODO: Fetch from KV storage
+      console.log('Session ID:', sessionId);
+    }
+  </script>
+</body>
+</html>
