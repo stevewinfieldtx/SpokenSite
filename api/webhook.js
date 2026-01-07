@@ -1,5 +1,4 @@
-@'
-// Vercel Serverless Function - ElevenLabs Webhook Handler
+﻿// Vercel Serverless Function - ElevenLabs Webhook Handler
 // Receives transcript from ElevenLabs, generates 3 website concepts, saves to Supabase
 
 import crypto from 'crypto';
@@ -140,4 +139,3 @@ Return ONLY valid JSON:
   
   return JSON.parse(content.trim());
 }
-'@ | Set-Content -Path "C:\Users\steve\Documents\SpokenSite\api\webhook.js" -Encoding UTF8
